@@ -13,11 +13,11 @@ app.use(bodyParser.urlencoded({
 
 app.post('/user', db.createUser)
 app.get('/user', db.getUsers)
-app.get('/user/:id', db.getUsersById)
 app.get('/user/moods', db.getMoods)
+app.get('/user/:id', db.getUsersById)
 app.get('/user/mood/:id', db.getMood)
 app.post('/user/mood/:id', db.createMood)
-app.put('/user/mood/:id', db.updateMood)
+app.put('/user/mood/:user_id/:status', db.updateMood)
 app.get('/user/:username', db.checkUsernameIsExits)
 
 app.listen(PORT, () => {
