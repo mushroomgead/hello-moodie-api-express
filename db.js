@@ -28,7 +28,7 @@ const getUsersById = (request, response) => {
     })
 }
 
-const getUsers = (request, response) => {
+const getAllUsers = (request, response) => {
     pool.query("SELECT * from users", (error, results) => {
         response.status(200).json(results.rows)
     })
@@ -86,7 +86,7 @@ const checkUsernameIsExits = (request, response) => {
 module.exports = {
     createUser,
     getUsersById,
-    getUsers,
+    getAllUsers,
     getMood,
     getMoods,
     createMood,
