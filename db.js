@@ -14,10 +14,11 @@ const createUser = (request, response) => {
 
     pool.query(`INSERT INTO users (username, password, email) VALUES ('${username}', '${password}', '${email}')`, 
     (error, results) => {
+        console.log(request.body, 'results');
         if (error) {
         throw error
         }
-        response.status(200).json(`created`)
+        response.status(200).json(`created!`)
     })
 }
 
@@ -34,13 +35,13 @@ const getAllUsers = (request, response) => {
     })
 }
 
-const getMoods = (request, response) => {
+const getAllMood = (request, response) => {
     pool.query("SELECT * from moods", (error, results) => {
         response.status(200).json(results.rows)
     })
 }
 
-const getMood = (request, response) => {
+const getMoodById = (request, response) => {
     const id = request.params.id
 
     pool.query("SELECT * FROM moods WHERE user_id = '" + id + "'", 
@@ -48,7 +49,7 @@ const getMood = (request, response) => {
         if (error) {
         throw error
         }
-        response.status(200).json(`created`)
+        response.status(200).json(results.rows)
     })
 }
 
@@ -65,14 +66,14 @@ const createMood = (request, response) => {
 }
 
 const updateMood = (request, response) => {
-    const { user_id, status } = request.body
+    const { user_id, status, id } = request.body
 
-    pool.query("UPDATE moods SET user_id='" + user_id + "', status='" + status + "'", 
+    pool.query("UPDATE moods SET user_id='" + user_id + "', status='" + status + "' where id='" + id + "'", 
     (error, results) => {
         if (error) {
         throw error
         }
-        response.status(200).json(`created`)
+        response.status(200).json(`updated`)
     })
 }
 
@@ -87,8 +88,8 @@ module.exports = {
     createUser,
     getUsersById,
     getAllUsers,
-    getMood,
-    getMoods,
+    getMoodById,
+    getAllMood,
     createMood,
     updateMood,
     checkUsernameIsExits
