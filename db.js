@@ -36,7 +36,7 @@ const getAllUsers = (request, response) => {
 }
 
 const getAllMood = (request, response) => {
-    pool.query("SELECT * from moods", (error, results) => {
+    pool.query("SELECT * from moods ORDER by created_date", (error, results) => {
         response.status(200).json(results.rows)
     })
 }
@@ -54,9 +54,9 @@ const getMoodById = (request, response) => {
 }
 
 const createMood = (request, response) => {
-    const { id, status } = request.body
+    const { id, status, note } = request.body
 
-    pool.query(`INSERT INTO moods (user_id, status) VALUES ('${id}', '${status}')`, 
+    pool.query(`INSERT INTO moods (user_id, status, note) VALUES ('${id}', '${status}', '${note}')`, 
     (error, results) => {
         if (error) {
         throw error
